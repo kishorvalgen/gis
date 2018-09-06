@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <body>
+  <p>Click the button to display the Offset of Original Lat-Long</p>
+  <button onclick="myFunction()">Try it</button>
+  <p id="demo1"></p>
+  <p id="demo3"></p>
+  <p id="demo2"></p>
+  <script>
+    function myFunction() {
+      var latitude = 42.0117188;
+      var longitude = -87.9507599;
 
-<p>Click the button to display the Offset of Original Lat-Long</p>
+      document.getElementById("demo1").innerHTML = ("Original Lat-Long " + latitude + ", " + longitude);
+      document.getElementById("demo2").innerHTML = "Offset Lat- Long " + offsetLatLong(latitude, longitude);
+    }
 
-<button onclick="myFunction()">Try it</button>
-<p id="demo1"></p>
-<p id="demo3"></p>
-<p id="demo2"></p>
+    function offsetLatLong(latitude, longitude) {
+      var ranges = [{ min: -250, max: -200 }, { min: 200, max: 250 }];
+      var dx = getRandomArbitrary(ranges);
+      var dy = getRandomArbitrary(ranges);
 
-<script>
-function myFunction() {
-var latitude = 42.1166687;
-var longitude = -88.0515289;
+      document.getElementById("demo3").innerHTML = ("Offset distance x-y " + dy + ", " + dx);
+      var r_earth = 6378000;
 
-  document.getElementById("demo1").innerHTML = ("Original Lat-Long "+latitude+", "+longitude);
-  document.getElementById("demo2").innerHTML = offsetLatLong(latitude, longitude);
-}
-function offsetLatLong(latitude, longitude) {
-var dy = getRandomArbitrary(200, 250);
-var dx = getRandomArbitrary(200, 250);
-document.getElementById("demo3").innerHTML = ("Offset distance x-y "+dy+", "+dx);
-var r_earth = 6378000;
+      new_latitude = latitude + (dy / r_earth) * (180 / Math.PI);
+      new_longitude = longitude + (dx / r_earth) * (180 / Math.PI) / Math.cos(latitude * Math.PI / 180);
+      return [new_latitude.toFixed(8), new_longitude.toFixed(8)];
+    }
 
-new_latitude  = latitude  + (dy / r_earth) * (180 / Math.PI);
-new_longitude = longitude + (dx / r_earth) * (180 / Math.PI) / Math.cos(latitude * Math.PI/180);
-return [new_latitude.toFixed(8), new_longitude.toFixed(8)];
-}
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-}
-</script>
+    function getRandomArbitrary(range) {
+      var rand = [];
+      range.forEach(function (e) {
+        rand.push(Math.random() * (e.max - e.min + 1) + e.min)
+      });
+      return rand[Math.floor(Math.random() * rand.length)].toFixed(8);
+    }
+  </script>
 </body>
 </html>
