@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<p>Click the button to display PI.</p>
+<p>Click the button to display the Offset of Original Lat-Long</p>
 
 <button onclick="myFunction()">Try it</button>
 <p id="demo1"></p>
@@ -11,25 +11,25 @@
 
 <script>
 function myFunction() {
-var latitude = 50.0452345;
-var longitude = 4.3242234;
-  document.getElementById("demo1").innerHTML = (latitude+","+longitude);
-  document.getElementById("demo2").innerHTML = offsettedLatLong(latitude, longitude);
+var latitude = 42.1166687;
+var longitude = -88.0515289;
+
+  document.getElementById("demo1").innerHTML = ("Original Lat-Long "+latitude+", "+longitude);
+  document.getElementById("demo2").innerHTML = offsetLatLong(latitude, longitude);
 }
-function offsettedLatLong(latitude, longitude) {
-var dy = getRandomArbitrary(10, 150);
-var dx = getRandomArbitrary(10, 150);
-document.getElementById("demo3").innerHTML = (dy+","+dx);
+function offsetLatLong(latitude, longitude) {
+var dy = getRandomArbitrary(200, 250);
+var dx = getRandomArbitrary(200, 250);
+document.getElementById("demo3").innerHTML = ("Offset distance x-y "+dy+", "+dx);
 var r_earth = 6378000;
 
 new_latitude  = latitude  + (dy / r_earth) * (180 / Math.PI);
 new_longitude = longitude + (dx / r_earth) * (180 / Math.PI) / Math.cos(latitude * Math.PI/180);
-return [new_latitude, new_longitude];
+return [new_latitude.toFixed(8), new_longitude.toFixed(8)];
 }
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 </script>
-
 </body>
 </html>
